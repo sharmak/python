@@ -42,7 +42,21 @@ def LCS_Rec(str1, str2):
         return 1 + LCS_Rec(str1[1:], str2[1:])
     else:
         return max(LCS_Rec(str1[0:], str2[1:]), LCS_Rec(str1[1:], str2[0:]))
-
+def LCS_DP(str1, str2):
+    import numpy as np
+    len_str1 = len(str1)
+    len_str2 = len(str2)
+    MAT = np.zeros(len_str1+1*len_str2+1, dtype="int")
+    MAT.resize(len_str1+1, len_str2+1)
+    for i in xrange(len_str1):
+        for j in xrange(len_str2):
+            if str1[i] == str2[j]:
+                MAT[i+1, j+1] = MAT[i, j] + 1
+            else:
+                MAT[i+1, j+1] = max( MAT[i,j], MAT[i+1,j], MAT[i, j+1])
+    #print MAT
+    return MAT[len_str1,len_str2]
+    
 if __name__ == '__main__':
     print LCS_Rec("sunny", "snowy")
     print LCS_Rec("acbd", "acbd")
@@ -54,3 +68,9 @@ if __name__ == '__main__':
     print LCS_Meomized("acbd", "acbd")
     print LCS_Meomized("vnvn", "vn")
     print LCS_Meomized("ABCDEF", "CDEFAB")
+    print "x" * 80
+    
+    print LCS_DP("sunny", "snowy")
+    print LCS_DP("acbd", "acbd")
+    print LCS_DP("vnvn", "vn")
+    print LCS_DP("ABCDEF", "CDEFAB")
