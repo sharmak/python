@@ -57,6 +57,11 @@ def LCS_DP(str1, str2):
     #print MAT
     return MAT[len_str1,len_str2]
     
+def LIS(arr):
+    import numpy as np
+    sort_arr = np.sort(arr)
+    return LCS_DP(arr, sort_arr)
+    
 if __name__ == '__main__':
     print LCS_Rec("sunny", "snowy")
     print LCS_Rec("acbd", "acbd")
@@ -74,3 +79,6 @@ if __name__ == '__main__':
     print LCS_DP("acbd", "acbd")
     print LCS_DP("vnvn", "vn")
     print LCS_DP("ABCDEF", "CDEFAB")
+    
+    print "x" * 80
+    print LIS([1,8,4,5,6,7,2,3,4,5,6,7])
