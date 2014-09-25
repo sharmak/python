@@ -39,10 +39,25 @@ def coins(s, n):
     # Case 2 include nth value
     s2 = deepcopy(s)
     w2 = coins(s2, n-removed_value)
-    return w1 + w2
-    
-    #
-    return ways
+    return w1 + w2    
+
+def coins_dp(s, n):
+    bag = list()
+    bag.append(0)
+    max_count = 0
+    for i in xrange(1,n+1):
+        curr_count = 0
+        for coin in s:
+            if i - coin < 0:
+                continue
+            curr_count = bag[i-coin] + 1
+            if curr_count > max_count:
+                max_count = curr_count
+        bag.append(max_count)
+        #print bag
+    return bag[-1]
 if __name__ == '__main__':
     print coins([1,2,3], 4)
     print coins([2,5,3,6], 10)    
+    print coins_dp([1,2,3], 4)
+    print coins_dp([2,5,3,6], 10)    
