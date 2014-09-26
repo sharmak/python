@@ -18,6 +18,13 @@ def mat_mult(ML):
     min = 123434243
     for i in xrange(2, len(ML)):
          ML1 = deepcopy(ML)
+         # Overlapping problems
+         # Create [10,20,30]
+         # (10,20) (20,30)
+         # [10,20,30,40]
+         # [10,20] [20,30,40]
+         # [10,20,30] [30,40]
+         # last element should always overlap
          s1 = ML1[:i]
          s2 = ML1[i-1:]
          #print "s1 = ",s1
