@@ -4,7 +4,6 @@ Created on Wed Sep 24 12:12:11 2014
 
 @author: kishor
 """
-import numpy as np
 from copy import deepcopy
 def mat_mult(ML):
     # 1 element means no matrix at all 
