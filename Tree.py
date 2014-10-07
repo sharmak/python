@@ -76,7 +76,43 @@ def mirror(cur):
     cur1.right = l
     return cur1
     
-from copy import deepcopy
+def construct_tree(pre_order, in_order):
+    print pre_order
+    print in_order
+    if len(pre_order) == 0:
+        return None
+    elif len(pre_order) == 1:
+        return TreeNode(pre_order[0])
+    elif len(pre_order) == 2:
+        n1 = TreeNode(pre_order[0])
+        n2 = TreeNode(pre_order[1])
+        if pre_order[0] == in_order[0]:
+            root = n1
+            root.right = n2
+            return root
+        else:
+            root = n2
+            root.left = n1
+            return root
+    else:
+        mid = len(pre_order) / 2
+        print mid        
+        root = TreeNode(pre_order[0])
+        mid_index = in_order.index(root.node)
+        new_in_order_left = in_order[:mid_index]
+        new_in_order_right = in_order[mid_index+1:]
+        new_pre_order_left = pre_order[1:mid+1]
+        new_pre_order_right = pre_order[mid+1:]
+        root.left = construct_tree(new_pre_order_left, new_in_order_left)
+        root.right = construct_tree(new_pre_order_right, new_in_order_right)
+        return root
+        
+        
+        
+        
+    
+    
+from copy import deepcopy    
 if __name__ == '__main__':
     n1 = TreeNode(3)
     n2 = TreeNode(2)
@@ -89,6 +125,10 @@ if __name__ == '__main__':
     #print t1.size()
     #print identical(t1.root, t2.root)
     #print t1.height()
-    t3 = Tree(mirror(t2.root))
-    t3.preOrder()
-    t2.preOrder();
+    #t3 = Tree(mirror(t2.root))
+    #t3.preOrder()
+    #t2.preOrder();
+    r =  construct_tree([1,2,4,3],[2,1,4,3])
+    t = Tree(r)
+    t.inOrder()
+    t.preOrder()
