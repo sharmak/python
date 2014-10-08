@@ -75,6 +75,8 @@ def mirror(cur):
     cur1.left = r
     cur1.right = l
     return cur1
+
+        
     
 def construct_tree(pre_order, in_order):
     print pre_order
@@ -108,7 +110,20 @@ def construct_tree(pre_order, in_order):
         return root
         
         
-        
+st = list()    
+def root_to_leaf_path(cur):
+    if cur is None:
+        return None
+    elif cur.left is None and cur.right is None:
+        st.append(cur.node)
+        print st
+        st.pop()
+        return None
+    else:
+        st.append(cur.node)
+        root_to_leaf_path(cur.left)
+        root_to_leaf_path(cur.right)
+        st.pop()        
         
     
     
@@ -117,6 +132,8 @@ if __name__ == '__main__':
     n1 = TreeNode(3)
     n2 = TreeNode(2)
     n3 = TreeNode(1, left=n1, right=n2)
+    n5 = TreeNode(5)
+    n4 = TreeNode(4, left=n5, right=n3)
     t1 = Tree(n3)
     t2 = deepcopy(t1)
     #t.preOrder()
@@ -128,7 +145,8 @@ if __name__ == '__main__':
     #t3 = Tree(mirror(t2.root))
     #t3.preOrder()
     #t2.preOrder();
-    r =  construct_tree([1,2,4,3],[2,1,4,3])
-    t = Tree(r)
-    t.inOrder()
-    t.preOrder()
+    #r =  construct_tree([1,2,4,3],[2,1,4,3])
+    root_to_leaf_path(n4)    
+    #t = Tree(r)
+    #t.inOrder()
+    #t.preOrder()
