@@ -62,6 +62,13 @@ class Tree(object):
                 d.append(nod.left)
             if nod.right is not None:
                 d.append(nod.right)
+    def _no_of_leaves(self, root):
+        if root.left is None and root.right is None:
+            return 1
+        else:
+            return self._no_of_leaves(root.left) + self._no_of_leaves(root.right)
+    def no_of_leaves(self):
+        return self._no_of_leaves(self.root)
         
             
         
@@ -162,7 +169,8 @@ if __name__ == '__main__':
     #t2.preOrder();
     #r =  construct_tree([1,2,4,3],[2,1,4,3])
     #root_to_leaf_path(n4)
-    t1.levelOrder()    
+    #t1.levelOrder()    
+    print t1.no_of_leaves()
     #t = Tree(r)
     #t.inOrder()
     #t.preOrder()
