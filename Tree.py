@@ -4,6 +4,7 @@ Created on Tue Oct 07 00:01:41 2014
 
 @author: admin
 """
+from collections import deque
 class TreeNode(object):
     def __init__(self, value, left=None, right=None):
         self.node = value
@@ -51,6 +52,20 @@ class Tree(object):
             return 1 + max(self._height(cur.left), self._height(cur.right))
     def height(self):
         return self._height(self.root)
+    def levelOrder(self):
+        d = deque()
+        d.append(self.root)
+        while len(d) > 0:
+            nod = d.popleft()
+            print nod.node
+            if nod.left is not None:
+                d.append(nod.left)
+            if nod.right is not None:
+                d.append(nod.right)
+        
+            
+        
+        
         
         
 def identical(cur1, cur2):
@@ -134,7 +149,7 @@ if __name__ == '__main__':
     n3 = TreeNode(1, left=n1, right=n2)
     n5 = TreeNode(5)
     n4 = TreeNode(4, left=n5, right=n3)
-    t1 = Tree(n3)
+    t1 = Tree(n4)
     t2 = deepcopy(t1)
     #t.preOrder()
     #t.postOrder()
@@ -146,7 +161,8 @@ if __name__ == '__main__':
     #t3.preOrder()
     #t2.preOrder();
     #r =  construct_tree([1,2,4,3],[2,1,4,3])
-    root_to_leaf_path(n4)    
+    #root_to_leaf_path(n4)
+    t1.levelOrder()    
     #t = Tree(r)
     #t.inOrder()
     #t.preOrder()
