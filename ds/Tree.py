@@ -68,8 +68,37 @@ class Tree(object):
         else:
             return self._no_of_leaves(root.left) + self._no_of_leaves(root.right)
     def no_of_leaves(self):
-        return self._no_of_leaves(self.root)
-        
+        return self._no_of_leaves(self.root)    
+    def _is_bst(self, root, min, max):
+        if root is None:
+            return True
+        elif root.node < min or root.node > max:
+            return False
+        else:
+            return self._is_bst(root.left, min, root.node) and \
+            self._is_bst(root.right, root.node, max)
+    def is_bst(self):
+        return self._is_bst(self.root, -9999, 9999)        
+    def spiral(self):
+        I = True
+        l = list()
+        l.append(self.root)
+        while len(l) != 0:           
+            if I:
+                print [p.node for p in l]
+            else:
+                l.reverse()
+                print [p.node for p in l]
+                l.reverse()
+            j = list()
+            for n in l:
+                if n.left is not None:
+                    j.append(n.left)
+                if n.right is not None:
+                    j.append(n.right)
+            
+            l = j
+            I = not I
             
         
         
@@ -151,9 +180,12 @@ def root_to_leaf_path(cur):
     
 from copy import deepcopy    
 if __name__ == '__main__':
-    n1 = TreeNode(3)
-    n2 = TreeNode(2)
-    n3 = TreeNode(1, left=n1, right=n2)
+    node_list = list()
+    for i in range(10):
+        node_list.append(TreeNode(i))
+    n1 = TreeNode(1)
+    n2 = TreeNode(3)
+    n3 = TreeNode(2,left=n1, right=n2)
     n5 = TreeNode(5)
     n4 = TreeNode(4, left=n5, right=n3)
     t1 = Tree(n4)
@@ -170,7 +202,20 @@ if __name__ == '__main__':
     #r =  construct_tree([1,2,4,3],[2,1,4,3])
     #root_to_leaf_path(n4)
     #t1.levelOrder()    
-    print t1.no_of_leaves()
+    #print t1.no_of_leaves()
+    n6= TreeNode(4, right=n5, left=n3)
+    t3 = Tree(n6)
+    #print t3.spiral()
+    my_tree = Tree(node_list[0])
+    node_list[0].left = node_list[1]
+    node_list[0].right = node_list[2]
+    node_list[1].left = node_list[3]
+    node_list[1].right = node_list[4]
+    node_list[2].left = node_list[5]
+    node_list[2].right = node_list[6]
+    node_list[3].left = node_list[8]
+    node_list[4].left = node_list[9]
+    my_tree.spiral()    
     #t = Tree(r)
     #t.inOrder()
     #t.preOrder()
