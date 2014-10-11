@@ -50,8 +50,20 @@ class Tree(object):
             return 0
         else:
             return 1 + max(self._height(cur.left), self._height(cur.right))
+            
     def height(self):
         return self._height(self.root)
+    def _diameter(self, root):
+        if root is None:
+            return 0
+        else:
+            rh = self._height(root.right)
+            lh = self._height(root.left)
+            ld = self._diameter(root.left)
+            rd = self._diameter(root.right)
+            return  max(ld, rd, lh+rh+1)
+    def diameter(self):
+        return self._diameter(self.root)
     def levelOrder(self):
         d = deque()
         d.append(self.root)
@@ -99,6 +111,22 @@ class Tree(object):
             
             l = j
             I = not I
+    def _child_sum(self, root):
+        if root is None:
+            return True
+        l = self._child_sum(root.left)
+        r = self._child_sum(root.right)
+        if root.left is None and root.right is not None:
+            return root.node == root.right.node and l and r
+        elif root.right is None and root.left is not None:
+            return root.node == root.left.node and l and r
+        elif root.left is not None and root.right is not None:
+            return (root.node == root.left.node + root.right.node) and l and r
+        else:
+            return l and r
+             
+    def child_sum(self):
+        return self._child_sum(self.root)
             
         
         
@@ -183,12 +211,19 @@ if __name__ == '__main__':
     node_list = list()
     for i in range(10):
         node_list.append(TreeNode(i))
-    n1 = TreeNode(1)
-    n2 = TreeNode(3)
-    n3 = TreeNode(2,left=n1, right=n2)
-    n5 = TreeNode(5)
-    n4 = TreeNode(4, left=n5, right=n3)
-    t1 = Tree(n4)
+    n1 = TreeNode(10)
+    n2 = TreeNode(8)
+    n3 = TreeNode(2)
+    n5 = TreeNode(3)
+    n4 = TreeNode(5)
+    n6 = TreeNode(2)
+    n7 = TreeNode(2)
+    n2.left = n5
+    n2.right = n4
+    n6.left = n7
+    n1.left = n2
+    n1.right = n6    
+    t1 = Tree(n1)
     t2 = deepcopy(t1)
     #t.preOrder()
     #t.postOrder()
@@ -203,8 +238,8 @@ if __name__ == '__main__':
     #root_to_leaf_path(n4)
     #t1.levelOrder()    
     #print t1.no_of_leaves()
-    n6= TreeNode(4, right=n5, left=n3)
-    t3 = Tree(n6)
+    #n6= TreeNode(4, right=n5, left=n3)
+    #t3 = Tree(n6)
     #print t3.spiral()
     my_tree = Tree(node_list[0])
     node_list[0].left = node_list[1]
@@ -215,7 +250,10 @@ if __name__ == '__main__':
     node_list[2].right = node_list[6]
     node_list[3].left = node_list[8]
     node_list[4].left = node_list[9]
-    my_tree.spiral()    
+    #my_tree.spiral()
+    print my_tree.child_sum() 
+    print t1.child_sum()
+    print t1.diameter()
     #t = Tree(r)
     #t.inOrder()
     #t.preOrder()
