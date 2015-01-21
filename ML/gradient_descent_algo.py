@@ -9,8 +9,8 @@ from scipy import stats
 def compute_j_theta0_1(x, y, theta0, theta1):
     m = len(x)
     J_theta_0_1 = 0
-    for xi, xj in zip(x, y):
-        J_theta_0_1 += ((theta0 + theta1*xi-xj)**2)
+    for xi, yi in zip(x, y):
+        J_theta_0_1 += ((theta0 + theta1*xi-yi)**2)
     J_theta_0_1 = J_theta_0_1 /(2 * m)
     return J_theta_0_1
 
@@ -20,11 +20,11 @@ def gradient_descent(x, y, alpha):
 
     m = len(x)
     J_theta_0_1 = compute_j_theta0_1(x, y, theta0, theta1)
-    max_iter = 1000
+    max_iter = 10000
     iterations = 1
     while True:
         temp0 = theta0 - alpha * np.sum([theta0+theta1*xi-yi for xi, yi in zip(x, y)])
-        temp1 = theta1 - ((alpha/m) * np.sum([(theta0+theta1*xi-yi)*theta1 for xi, yi in zip(x,y)]))
+        temp1 = theta1 - ((alpha/m) * np.sum([(theta0+theta1*xi-yi)*xi for xi, yi in zip(x,y)]))
         # simultaenous update
         theta0 = temp0
         theta1 = temp1
@@ -39,6 +39,10 @@ def gradient_descent(x, y, alpha):
             break
         J_theta_0_1 = error
         if iterations > max_iter:
+            print "Not Converged"
+            print iterations
+            print "theta0 = %s , theta1 = %s " %(str(theta0), str(theta1))
+ 
             break
         iterations = iterations + 1
 
